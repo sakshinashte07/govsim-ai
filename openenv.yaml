@@ -1,0 +1,5 @@
+name: polisim-env
+version: 1.0.0
+description: Policy Simulation Environment
+
+entry_point: environment:PoliSimEnv
