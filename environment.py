@@ -18,16 +18,7 @@ class PoliSimEnv:
     def step(self, action: Action):
         self.state_data["month"] += 1
 
-        # 🔥 Event system
-        if self.state_data["month"] == 3:
-            self.state_data["pollution"] += 10
-            self.state_data["economy"] -= 5
-
-        if self.state_data["month"] == 5:
-            self.state_data["economy"] -= 10
-            self.state_data["satisfaction"] -= 5
-
-        new_state = simulate(self.state_data, action.dict())
+        new_state = simulate(self.state_data, action.model_dump())
         self.state_data.update(new_state)
 
         reward = self.compute_reward()
@@ -40,7 +31,7 @@ class PoliSimEnv:
         e = self.state_data["economy"]
         s = self.state_data["satisfaction"]
 
-        return round(((100 - p)*0.4 + e*0.3 + s*0.3) / 100, 2)
+        return round(((100 - p)*0.4 + e*0.3 + s*0.3)/100, 2)
 
     def state(self):
         return self.state_data
